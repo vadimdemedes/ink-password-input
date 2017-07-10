@@ -1,6 +1,6 @@
 {
 	"name": "ink-password-input",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Password input component for Ink",
 	"license": "MIT",
 	"repository": "vadimdemedes/ink-password-input",
