@@ -1,6 +1,7 @@
 'use strict';
 
 const {h, Text, Component} = require('ink');
+const PropTypes = require('prop-types');
 const hasAnsi = require('has-ansi');
 
 const noop = () => {};
@@ -12,7 +13,7 @@ class PasswordInput extends Component {
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
 
-	render({value = '', mask = '*', placeholder}) {
+	render({value, mask, placeholder}) {
 		const hasValue = value.length > 0;
 		const maskedValue = mask.repeat(value.length);
 
@@ -36,11 +37,7 @@ class PasswordInput extends Component {
 			return;
 		}
 
-		const {
-			value,
-			onSubmit = noop,
-			onChange = noop
-		} = this.props;
+		const {value, onChange, onSubmit} = this.props;
 
 		if (key.name === 'return') {
 			onSubmit(value);
@@ -57,5 +54,21 @@ class PasswordInput extends Component {
 		}
 	}
 }
+
+PasswordInput.propTypes = {
+	value: PropTypes.string,
+	mask: PropTypes.string,
+	placeholder: PropTypes.string,
+	onChange: PropTypes.func,
+	onSubmit: PropTypes.func
+};
+
+PasswordInput.defaultProps = {
+	value: '',
+	mask: '*',
+	placeholder: '',
+	onChange: noop,
+	onSubmit: noop
+};
 
 module.exports = PasswordInput;

@@ -13,7 +13,7 @@ $ npm install ink-password-input
 ## Usage
 
 ```jsx
-const {h, Component} = require('ink');
+const {h, render, Component} = require('ink');
 const PasswordInput = require('ink-password-input');
 
 class Auth extends Component {
@@ -50,18 +50,7 @@ class Auth extends Component {
 	}
 }
 
-mount(<Auth/>);
-```
-
-**Note**: For `<PasswordInput>` to be able to receive `keypress` events, `process.stdin` must be in [raw mode](https://nodejs.org/api/tty.html#tty_readstream_setrawmode_mode). As a result, default behavior like Ctrl+C is disabled, so you must handle that manually.
-
-Use this snippet to enable `keypress` events:
-
-```js
-const readline = require('readline');
-
-readline.emitKeypressEvents(process.stdin);
-process.stdin.setRawMode(true);
+render(<Auth/>);
 ```
 
 

@@ -1,30 +1,36 @@
+import EventEmitter from 'events';
 import {spy} from 'sinon';
 import test from 'ava';
-import {h, render as build, renderToString, mount, Text} from 'ink';
+import {h, build, renderToString, render, Text} from 'ink';
 import TextInput from '.';
 
-const render = tree => renderToString(build(tree));
-
 test('default state', t => {
-	t.is(render(<TextInput/>), '');
+	t.is(renderToString(<TextInput/>), '');
 });
 
 test('display value', t => {
-	t.is(render(<TextInput value="Hello"/>), '*****');
+	t.is(renderToString(<TextInput value="Hello"/>), '*****');
 });
 
 test('display value with custom mask', t => {
-	t.is(render(<TextInput value="Hello" mask="x"/>), 'xxxxx');
+	t.is(renderToString(<TextInput value="Hello" mask="x"/>), 'xxxxx');
 });
 
 test('display placeholder', t => {
-	t.is(render(<TextInput placeholder="Placeholder"/>), render(<Text dim>Placeholder</Text>));
+	t.is(renderToString(<TextInput placeholder="Placeholder"/>), renderToString(<Text dim>Placeholder</Text>));
 });
 
 test.serial('attach keypress listener', t => {
+	const stdin = new EventEmitter();
+	stdin.setRawMode = spy();
+	stdin.pause = spy();
+
+	const stdout = {
+		write: spy()
+	};
+
 	const setRef = spy();
-	const stream = {write: () => {}};
-	const unmount = mount(<TextInput ref={setRef}/>, stream);
+	const unmount = render(<TextInput ref={setRef}/>, {stdin, stdout});
 	const ref = setRef.firstCall.args[0];
 
 	t.is(process.stdin.listeners('keypress')[0], ref.handleKeyPress);
@@ -39,7 +45,7 @@ test('ignore ansi escapes', t => {
 	const onChange = spy();
 	const onSubmit = spy();
 
-	render(<TextInput ref={setRef} onChange={onChange} onSubmit={onSubmit}/>);
+	build(<TextInput ref={setRef} onChange={onChange} onSubmit={onSubmit}/>);
 
 	const ref = setRef.firstCall.args[0];
 	ref.handleKeyPress('', {sequence: '\u001B[H'});
@@ -53,7 +59,7 @@ test('handle return', t => {
 	const onChange = spy();
 	const onSubmit = spy();
 
-	render(<TextInput ref={setRef} value="Test" onChange={onChange} onSubmit={onSubmit}/>);
+	build(<TextInput ref={setRef} value="Test" onChange={onChange} onSubmit={onSubmit}/>);
 
 	const ref = setRef.firstCall.args[0];
 	ref.handleKeyPress('', {name: 'return'});
@@ -68,7 +74,7 @@ test('handle change', t => {
 	const onChange = spy();
 	const onSubmit = spy();
 
-	render(<TextInput ref={setRef} value="A" onChange={onChange} onSubmit={onSubmit}/>);
+	build(<TextInput ref={setRef} value="A" onChange={onChange} onSubmit={onSubmit}/>);
 
 	const ref = setRef.firstCall.args[0];
 	ref.handleKeyPress('B', {sequence: 'B'});
