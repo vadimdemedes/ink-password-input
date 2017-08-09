@@ -30,12 +30,16 @@ class Auth extends Component {
 
 	render(props, state) {
 		return (
-			<PasswordInput
-				value={state.password}
-				placeholder="Enter password"
-				onChange={this.handleChange}
-				onSubmit={this.handleSubmit}
-			/>
+			<span>
+				Password:
+
+				<PasswordInput
+					value={state.password}
+					placeholder="Enter your password"
+					onChange={this.handleChange}
+					onSubmit={this.handleSubmit}
+				/>
+			</span>
 		);
 	}
 
