@@ -57,6 +57,8 @@ class Auth extends Component {
 render(<Auth/>);
 ```
 
+<img src="media/demo.gif" width="544">
+
 
 ## Props
 
