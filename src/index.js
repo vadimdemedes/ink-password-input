@@ -1,6 +1,6 @@
 'use strict';
 
-const {h, Text, Component} = require('ink');
+const {h, Color, Component} = require('ink');
 const PropTypes = require('prop-types');
 const hasAnsi = require('has-ansi');
 
@@ -18,9 +18,9 @@ class PasswordInput extends Component {
 		const maskedValue = mask.repeat(value.length);
 
 		return (
-			<Text dim={!hasValue}>
+			<Color dim={!hasValue}>
 				{hasValue ? maskedValue : placeholder}
-			</Text>
+			</Color>
 		);
 	}
 
