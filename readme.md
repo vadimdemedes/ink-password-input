@@ -1,3 +1,5 @@
+**Note:** This component is deprecated in favor of [ink-text-input](https://github.com/vadimdemedes/ink-text-input). Password input could be simulated with `<TextInput mask="*"/>`.
+
 # ink-password-input [![Build Status](https://travis-ci.org/vadimdemedes/ink-password-input.svg?branch=master)](https://travis-ci.org/vadimdemedes/ink-password-input)
 
 > Password input component for [Ink](https://github.com/vadimdemedes/ink).
